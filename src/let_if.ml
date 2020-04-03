@@ -11,21 +11,10 @@ let expand_let ~let_loc:loc
     Location.raise_errorf ~loc "[%%if ] cannot apply to a recursive let binding"
   | Nonrecursive ->
     match bindings with
-    | [{ pvb_pat; pvb_expr; pvb_attributes; pvb_loc }] ->
-      let match_expression =
-        pexp_match ~loc
-          pvb_expr
-          [ { pc_lhs = pvb_pat;
-              pc_guard = None;
-              pc_rhs = expression };
-            { pc_lhs = ppat_any loc;
-              pc_guard = None;
-              pc_rhs = [%expr ()]; }] in
-      { match_expression with
-        pexp_attributes =
-          [{ loc; txt = "ocaml.warning" },
-           PStr [ pstr_eval ~loc (estring ~loc "-11") [] ] ]}
-
+    | [{ pvb_pat; pvb_expr; pvb_attributes = _; pvb_loc = _ }] ->
+      [%expr (match [%e pvb_expr] with
+          | [%p pvb_pat] -> [%e expression]
+          | _ -> ()) [@ocaml.warning "-11"] ]
     | _ ->
       Location.raise_errorf ~loc "[%%if ] cannot apply to let-and bindings"
 
