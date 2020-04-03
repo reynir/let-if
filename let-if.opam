@@ -4,7 +4,7 @@ maintainer: "Reynir Björnsson <reynir@reynir.dk>"
 authors: "Reynir Björnsson <reynir@reynir.dk>"
 homepage: "https://github.com/reynir/let-if/"
 bug-reports: "https://github.com/reynir/let-if/issues/"
-dev-repo: "https://github.com/reynir/let-if.git"
+dev-repo: "git+https://github.com/reynir/let-if.git"
 license: "BSD-2-clause"
 build: ["dune" "build" "-p" name]
 depends: [
