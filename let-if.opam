@@ -1,12 +1,13 @@
-opam-version: "1.2"
+opam-version: "2.0"
+synopsis: "let%if syntax inspired by Rust's if let syntax"
 maintainer: "Reynir Björnsson <reynir@reynir.dk>"
 authors: "Reynir Björnsson <reynir@reynir.dk>"
 homepage: "https://github.com/reynir/let-if/"
 bug-reports: "https://github.com/reynir/let-if/issues/"
 dev-repo: "https://github.com/reynir/let-if.git"
 license: "BSD-2-clause"
-build: ["jbuilder" "build" "-p" name]
+build: ["dune" "build" "-p" name]
 depends: [
-  "jbuilder" {build}
+  "dune"
   "ppxlib"
 ]
