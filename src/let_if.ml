@@ -12,9 +12,9 @@ let expand_let ~let_loc:loc
   | Nonrecursive ->
     match bindings with
     | [{ pvb_pat; pvb_expr; pvb_attributes = _; pvb_loc = _ }] ->
-      [%expr (match [%e pvb_expr] with
+      [%expr match [%e pvb_expr] with
           | [%p pvb_pat] -> [%e expression]
-          | _ -> ()) [@ocaml.warning "-11"] ]
+          | _ -> () ]
     | _ ->
       Location.raise_errorf ~loc "[%%if ] cannot apply to let-and bindings"
 
