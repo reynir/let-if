@@ -30,6 +30,26 @@ let let_if : Extension.t =
     Ast_pattern.(single_expr_payload __)
     expand_let
 
+let expand_if ~ctxt:_ if_ then_ else_ =
+  let c = gen_symbol () in
+  let loc = if_.pexp_loc in
+  match else_ with
+  | Some else_ ->
+    [%expr let [%p pvar ~loc c] = [%e if_] in (if [%e evar ~loc c] then [%e then_] else [%e else_]); [%e evar ~loc c] ]
+  | None ->
+    [%expr let [%p pvar ~loc c] = [%e if_] in (if [%e evar ~loc c] then [%e then_]); [%e evar ~loc c]]
+
+let if_true : Extension.t =
+  Extension.V3.declare "true"
+    Extension.Context.Expression
+    Ast_pattern.(single_expr_payload (pexp_ifthenelse __ __ __))
+    expand_if
+
+let extensions = [
+  let_if;
+  if_true;
+]
+
 let () =
   Ppxlib.Driver.register_transformation "let-if"
-    ~extensions:[let_if]
+    ~extensions
