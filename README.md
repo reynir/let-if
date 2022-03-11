@@ -1,6 +1,6 @@
 # let%if is if let backwards
 
-This ppx adds a construct similar to `let if` in Rust.
+This ppx adds a construct similar to `if let` in Rust.
 The following two snippets are equivalent:
 
 ```OCaml
