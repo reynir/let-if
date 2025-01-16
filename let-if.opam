@@ -12,3 +12,4 @@ depends: [
   "dune"
   "ppxlib" {>= "0.6.0"}
 ]
+x-maintenance-intent: [ "(none)" ]
